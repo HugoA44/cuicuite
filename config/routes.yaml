@@ -1,0 +1,45 @@
+index:
+   path: /
+   controller: App\Controller\DefaultController::index
+
+products:
+   path: /products
+   controller: App\Controller\ProductController::index
+
+product:
+   path: /products/{id}
+   controller: App\Controller\ProductController::productDetails
+
+product_by_type:
+    path: /products/type/{type}
+    controller: App\Controller\ProductController::productsByProductType
+
+product_by_category:
+    path: /products/category/{category}
+    controller: App\Controller\ProductController::productsByCategory
+
+
+admin:
+    path: /admin
+    controller: App\Controller\AdminController::index
+
+adminAddProduct:
+    path: /admin/addproduct
+    controller: App\Controller\AdminController::addproduct
+
+adminUpdateProduct:
+    path: /admin/updateproduct/{id}
+    controller: App\Controller\AdminController::updateproduct
+
+adminRemoveProduct:
+    path: /admin/removeproduct/{id}
+    controller: App\Controller\AdminController::removeproduct
+
+
+login:
+    path: /login
+    controller: App\Controller\SecurityController::login
+
+register:
+    path: /register
+    controller: App\Controller\RegistrationController::register
