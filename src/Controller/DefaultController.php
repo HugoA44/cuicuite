@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Content;
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -9,12 +11,16 @@ use Symfony\Component\Routing\Annotation\Route;
 class DefaultController extends AbstractController
 {
     /**
-     * @Route("/default", name="default")
+     * @Route("/", name="default")
      */
     public function index(): Response
     {
+        $contents = $this->getDoctrine()->getRepository(Content::class)->findAll();
+
         return $this->render('default/index.html.twig', [
             'controller_name' => 'DefaultController',
+            'contents' => $contents,
         ]);
     }
+
 }

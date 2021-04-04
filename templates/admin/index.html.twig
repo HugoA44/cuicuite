@@ -1,5 +1,6 @@
-{% extends 'base.html.twig' %} {% block title %}Administration{% endblock %} {%
+{% extends 'base.html.twig' %} {% block title %}Easter Egg en page 404{% endblock %} {%
 block body %}
+<div class="admin">
 <a href="{{ path('adminAddProduct') }}"><button>Add product</button></a>
 <table class="redTable">
   <thead>
@@ -39,4 +40,30 @@ block body %}
     {% endfor %}
   </tbody>
 </table>
+
+<table class="redTable">
+  <thead>
+    <tr>
+      <th>id</th>
+      <th>Nom</th>
+      <th>Texte</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for content in contents %}
+    <tr>
+      <td>{{ content.id }}</td>
+      <td>{{ content.name }}</td>
+      <td>{{ content.text }}</td>
+      <td>
+         <a href="{{ path('adminUpdateContent', { id: content.id }) }}"
+          ><span class="remove">Modifier</span></a
+        >
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+</div>
 {% endblock %}

@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 use App\Entity\Product;
+use App\Entity\Content;
 use App\Entity\ProductType;
 use App\Entity\TypeCategory;
 use Doctrine\ORM\EntityManagerInterface;
@@ -28,10 +29,12 @@ class AdminController extends AbstractController
     public function index(): Response
     {
         $products = $this->getDoctrine()->getRepository(Product::class)->findAll();
+        $contents = $this->getDoctrine()->getRepository(Content::class)->findAll();
 
         return $this->render('admin/index.html.twig', [
             'controller_name' => 'AdminController',
-            'products' => $products
+            'products' => $products,
+            'contents' => $contents
         ]);
     }
 
@@ -187,6 +190,56 @@ class AdminController extends AbstractController
             'controller_name' => 'AdminController',
             'form' => $form->createView(),
             'action' => 'Update product'
+        ]);
+    }
+
+    /**
+     * @Route("/admin/updatecontent/{id}", name="adminUpdateContent")
+     */
+    public function updatecontent(int $id, EntityManagerInterface $entityManager, Request $request): Response
+    {
+        //Récupération du manager de données
+        $entityManager = $this->getDoctrine()->getManager();
+
+        //Sélection d'une donnée par son id
+        $content = $entityManager->getRepository(Content::class)->find($id);
+
+        //Vérifictation si le produit existe bien
+        if (!$content) {
+            throw $this->createNotFoundException(
+                'No content found for id ' . $id
+            );
+        }
+
+        // Création du formulaire
+        $form = $this->createFormBuilder($content)
+            ->add('name', TextType::class, array('required' => true))
+            ->add('text', TextType::class, array('required' => true))
+
+            ->add('save', SubmitType::class, [
+                'label' => 'Add',
+                'attr' => ['class' => 'btn-full']
+            ])
+            ->getForm();
+
+        //Récupération des données
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            //Récupération des données
+            $product = $form->getData();
+
+            //Sauvegardes des données
+            $entityManager->persist($content);
+            //Execution de l'insertion des données
+            $entityManager->flush();
+        }
+
+
+        return $this->render('admin/addproduct.html.twig', [
+            'controller_name' => 'AdminController',
+            'form' => $form->createView(),
+            'action' => 'Update content'
         ]);
     }
 

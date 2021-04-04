@@ -1,0 +1,18 @@
+{# templates/bundles/TwigBundle/Exception/error404.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="quatrecentquatre">
+    <h1>Erreur 404</h1>
+
+    <img
+              src="{{ asset('assets/images/logo/cuicuite.svg') }}"
+              alt=""
+              class="logo-sidebar rotate"
+            />
+
+    <p>
+        Et voilà pour l'easter egg. 😏<a href="{{ path('index') }}">Retourner à l'accueil</a>.
+    </p>
+</div>
+{% endblock %}

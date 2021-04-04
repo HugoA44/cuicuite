@@ -35,6 +35,10 @@ adminRemoveProduct:
     path: /admin/removeproduct/{id}
     controller: App\Controller\AdminController::removeproduct
 
+adminUpdateContent:
+    path: /admin/updatecontent/{id}
+    controller: App\Controller\AdminController::updatecontent
+
 
 login:
     path: /login
